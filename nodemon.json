@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": ["node_modules", ".next", ".idea", ".git", "bin"],
+  "watch": ["src", "package.json"],
+  "ext": "js json"
+}
