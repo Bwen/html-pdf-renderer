@@ -6,19 +6,19 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.text());
 app.use(compression());
 
-app.get('/', async (req, res) => {
+app.post('/', async (req, res) => {
     try {
-        const url = req.query.url;
-        if (url === undefined) {
-            throw new Error("Missing URL param");
+        if (typeof req.body === 'object') {
+            throw new Error("Service requires header 'Content-Type: text/plain', and a raw body that is either a URL or HTML content");
         }
 
-        const pdf = await htmlPdf.create(url, {
+        const pdf = await htmlPdf.create(req.body, {
             port: 9222,
             printOptions: {
+                margins: 0,
                 printBackground: true,
             }
         });
